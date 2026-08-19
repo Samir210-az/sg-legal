@@ -2,7 +2,7 @@
 // The browser sends the raw video file; this function inits the TikTok upload session
 // and forwards the bytes server-to-server (avoids CORS issues with TikTok's upload_url).
 
-const formidable = require('formidable');
+const { formidable } = require('formidable');
 const fs = require('fs');
 
 module.exports.config = { api: { bodyParser: false } };
