@@ -3,92 +3,171 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Məxfilik Siyasəti — SECURITY GROUP</title>
+<title>SECURITY GROUP — Sosial Media İdarəetmə Platforması</title>
+<meta name="description" content="Instagram və TikTok hesablarının planlaşdırılması, analitikası və reklam idarəsi üçün vahid panel.">
 <style>
+  @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap');
+
+  :root {
+    --bg: #0B0F14;
+    --surface: #12181F;
+    --surface-2: #1A222B;
+    --border: #253039;
+    --text: #E9EDF1;
+    --text-dim: #8A97A3;
+    --accent: #E3B23C;
+    --accent-dim: #7A6A3A;
+  }
+
   * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
   body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
-    background: #f7f7f8;
-    color: #1a1a1a;
-    line-height: 1.65;
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', -apple-system, sans-serif;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
   }
-  .wrap { max-width: 720px; margin: 0 auto; padding: 40px 20px 80px; }
-  header { margin-bottom: 32px; }
-  header h1 { font-size: 26px; font-weight: 700; margin-bottom: 8px; }
-  header .updated { font-size: 14px; color: #6b6b6b; }
-  section { margin-bottom: 28px; }
-  h2 { font-size: 18px; font-weight: 600; margin-bottom: 10px; }
-  p, li { font-size: 15px; color: #2a2a2a; }
-  ul { padding-inline-start: 20px; margin-top: 6px; }
-  li { margin-bottom: 6px; }
-  .contact {
-    background: #ffffff;
-    border: 1px solid #e5e5e5;
-    border-radius: 10px;
-    padding: 18px 20px;
+  .mono { font-family: 'JetBrains Mono', monospace; letter-spacing: 0.04em; }
+  h1, h2, h3 { font-family: 'Space Grotesk', sans-serif; font-weight: 600; letter-spacing: -0.01em; }
+  a { color: inherit; }
+  .wrap { max-width: 960px; margin: 0 auto; padding: 0 24px; }
+
+  nav { border-bottom: 1px solid var(--border); padding: 20px 0; }
+  nav .wrap { display: flex; align-items: center; justify-content: space-between; }
+  .brand { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 15px; }
+  .brand-mark {
+    width: 22px; height: 22px; border: 1.5px solid var(--accent); border-radius: 4px;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--accent); font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700;
   }
-  a { color: #d81b60; text-decoration: none; }
-  a:hover { text-decoration: underline; }
-  footer { margin-top: 40px; font-size: 13px; color: #8a8a8a; text-align: center; }
+  .nav-links { display: flex; gap: 28px; font-size: 14px; color: var(--text-dim); }
+  .nav-links a { text-decoration: none; }
+  .nav-links a:hover { color: var(--text); }
+
+  .hero { padding: 88px 0 64px; }
+  .eyebrow { font-size: 12px; color: var(--accent); text-transform: uppercase; margin-bottom: 18px; display: inline-block; }
+  h1 { font-size: clamp(32px, 5.4vw, 52px); line-height: 1.08; max-width: 12ch; margin-bottom: 22px; }
+  .hero p.sub { font-size: 17px; color: var(--text-dim); max-width: 46ch; margin-bottom: 34px; }
+
+  .panel { margin-top: 56px; background: var(--surface); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
+  .panel-head { display: flex; align-items: center; gap: 10px; padding: 12px 18px; border-bottom: 1px solid var(--border); background: var(--surface-2); }
+  .dot { width: 8px; height: 8px; border-radius: 50%; background: #3a4650; }
+  .panel-head .label { font-size: 12px; color: var(--text-dim); margin-inline-start: auto; }
+  .panel-body { padding: 20px 18px; display: flex; flex-direction: column; gap: 12px; }
+  .row { display: flex; align-items: center; gap: 14px; padding: 12px 14px; background: var(--bg); border: 1px solid var(--border); border-radius: 8px; }
+  .row .platform { font-size: 13px; font-weight: 600; width: 84px; }
+  .row .status { display: flex; align-items: center; gap: 7px; font-size: 12px; color: var(--text-dim); }
+  .status .pulse { width: 7px; height: 7px; border-radius: 50%; background: #4ADE80; box-shadow: 0 0 0 3px rgba(74,222,128,0.15); }
+  .row .meta { margin-inline-start: auto; font-size: 12px; color: var(--text-dim); }
+
+  .features { padding: 64px 0; border-top: 1px solid var(--border); display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); }
+  .feature { background: var(--bg); padding: 32px 28px; }
+  .feature .num { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--accent-dim); margin-bottom: 16px; }
+  .feature h3 { font-size: 17px; margin-bottom: 10px; }
+  .feature p { font-size: 14px; color: var(--text-dim); }
+
+  .flow { padding: 64px 0; border-top: 1px solid var(--border); }
+  .flow h2 { font-size: 22px; margin-bottom: 36px; }
+  .steps { display: flex; flex-direction: column; }
+  .step { display: grid; grid-template-columns: 48px 1fr; gap: 18px; padding: 20px 0; border-top: 1px solid var(--border); }
+  .step:last-child { border-bottom: 1px solid var(--border); }
+  .step .idx { font-family: 'JetBrains Mono', monospace; color: var(--accent); font-size: 13px; padding-top: 2px; }
+  .step h4 { font-size: 15px; margin-bottom: 4px; }
+  .step p { font-size: 14px; color: var(--text-dim); }
+
+  footer { border-top: 1px solid var(--border); padding: 28px 0 40px; display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: var(--text-dim); }
+  footer a { color: var(--text-dim); text-decoration: none; }
+  footer a:hover { color: var(--accent); }
+
+  @media (max-width: 720px) {
+    .features { grid-template-columns: 1fr; }
+    .nav-links { display: none; }
+    .row .meta { display: none; }
+  }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
 </style>
 </head>
 <body>
-<div class="wrap">
-  <header>
-    <h1>Məxfilik Siyasəti</h1>
-    <div class="updated">Son yenilənmə: 2026-08-19</div>
-  </header>
 
-  <section>
-    <p>Bu Məxfilik Siyasəti SECURITY GROUP tərəfindən hazırlanmış tətbiqin (bundan sonra — "Tətbiq") istifadəçi məlumatlarını necə topladığını, istifadə etdiyini və qoruduğunu izah edir. Tətbiq TikTok API vasitəsilə sosial media hesablarının idarə edilməsi üçün nəzərdə tutulub.</p>
-  </section>
+<nav>
+  <div class="wrap">
+    <div class="brand"><span class="brand-mark">SG</span>SECURITY GROUP</div>
+    <div class="nav-links">
+      <a href="privacy.html">Məxfilik</a>
+      <a href="terms.html">Şərtlər</a>
+      <a href="https://instagram.com/securtiy_group" target="_blank">Əlaqə</a>
+    </div>
+  </div>
+</nav>
 
-  <section>
-    <h2>Topladığımız məlumatlar</h2>
-    <ul>
-      <li>TikTok hesab identifikasiyası (istifadəçi ID, hesab adı, profil şəkli)</li>
-      <li>TikTok tərəfindən verilən giriş token-ləri (access token, refresh token) — hesabınıza icazə verdiyiniz əməliyyatları yerinə yetirmək üçün</li>
-      <li>Paylaşılan kontentin performans göstəriciləri (baxış, bəyənmə, şərh sayı) — yalnız analitika məqsədilə</li>
-      <li>Tətbiq daxilində yaratdığınız kontent (video, şəkil, mətn) — planlaşdırma və paylaşım üçün</li>
-    </ul>
-  </section>
+<header class="hero">
+  <div class="wrap">
+    <span class="eyebrow mono">Social Manager</span>
+    <h1>Bir panel. Bütün hesablar.</h1>
+    <p class="sub">Instagram və TikTok hesablarınızın planlaşdırılması, analitikası və reklam idarəsi — vahid, sadə bir panel üzərindən.</p>
 
-  <section>
-    <h2>Məlumatlardan necə istifadə edirik</h2>
-    <ul>
-      <li>Sizin icazə verdiyiniz kontentin TikTok hesabınızda planlaşdırılması və paylaşılması</li>
-      <li>Hesabınızın performans analitikasının göstərilməsi</li>
-      <li>Tətbiqin funksionallığının təmin edilməsi və təhlükəsizliyin qorunması</li>
-    </ul>
-    <p style="margin-top:10px;">Məlumatlarınız üçüncü tərəflərə satılmır və ya reklam məqsədilə paylaşılmır.</p>
-  </section>
+    <div class="panel">
+      <div class="panel-head">
+        <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+        <span class="label mono">connected-accounts</span>
+      </div>
+      <div class="panel-body">
+        <div class="row">
+          <span class="platform">Instagram</span>
+          <span class="status"><span class="pulse"></span>Aktiv</span>
+          <span class="meta mono">12 post planlaşdırılıb</span>
+        </div>
+        <div class="row">
+          <span class="platform">TikTok</span>
+          <span class="status"><span class="pulse"></span>Aktiv</span>
+          <span class="meta mono">3 kampaniya işləyir</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
 
-  <section>
-    <h2>Məlumatların saxlanması və təhlükəsizliyi</h2>
-    <p>Giriş token-ləri şifrələnmiş formada saxlanılır. Yalnız icazə verdiyiniz əməliyyatlar üçün istifadə olunur. İstənilən vaxt icazənizi TikTok tənzimləmələrindən ləğv edə bilərsiniz — bu, Tətbiqin hesabınıza girişini dərhal dayandırır.</p>
-  </section>
+<section class="features">
+  <div class="feature">
+    <div class="num mono">01</div>
+    <h3>Planlaşdırma</h3>
+    <p>Postları və reels-ləri əvvəlcədən hazırlayın, avtomatik vaxtında paylaşılsın.</p>
+  </div>
+  <div class="feature">
+    <div class="num mono">02</div>
+    <h3>Analitika</h3>
+    <p>Baxış, bəyənmə və izləyici artımını real vaxtda izləyin.</p>
+  </div>
+  <div class="feature">
+    <div class="num mono">03</div>
+    <h3>Reklam idarəsi</h3>
+    <p>Büdcə və hədəf auditoriyanı bir yerdən tənzimləyin.</p>
+  </div>
+</section>
 
-  <section>
-    <h2>Məlumatların silinməsi</h2>
-    <p>Hesabınızı Tətbiqdən ayırdıqda və ya bizimlə əlaqə saxlayıb tələb etdikdə, sizə aid bütün saxlanılan məlumatlar 30 gün ərzində silinir.</p>
-  </section>
+<section class="flow wrap">
+  <h2>Necə işləyir</h2>
+  <div class="steps">
+    <div class="step">
+      <span class="idx mono">01</span>
+      <div><h4>Hesabı qoşun</h4><p>Instagram və ya TikTok hesabınıza rəsmi icazə vasitəsilə qoşulun.</p></div>
+    </div>
+    <div class="step">
+      <span class="idx mono">02</span>
+      <div><h4>Kontenti planlaşdırın</h4><p>Postları hazırlayın, tarix və vaxt təyin edin.</p></div>
+    </div>
+    <div class="step">
+      <span class="idx mono">03</span>
+      <div><h4>Nəticəni izləyin</h4><p>Performans göstəricilərini panel üzərindən görün.</p></div>
+    </div>
+  </div>
+</section>
 
-  <section>
-    <h2>Uşaqların məxfiliyi</h2>
-    <p>Tətbiq 18 yaşdan aşağı şəxslər üçün nəzərdə tutulmayıb və onlardan bilərəkdən məlumat toplamır.</p>
-  </section>
+<footer class="wrap">
+  <span>© 2026 SECURITY GROUP</span>
+  <a href="https://instagram.com/securtiy_group" target="_blank">By securtiy_group</a>
+</footer>
 
-  <section>
-    <h2>Siyasətdə dəyişikliklər</h2>
-    <p>Bu Məxfilik Siyasəti vaxtaşırı yenilənə bilər. Əhəmiyyətli dəyişikliklər bu səhifədə dərc olunacaq.</p>
-  </section>
-
-  <section class="contact">
-    <h2>Əlaqə</h2>
-    <p>Suallarınız üçün: <a href="https://instagram.com/securtiy_group" target="_blank">instagram.com/securtiy_group</a></p>
-  </section>
-
-  <footer>© 2026 SECURITY GROUP. Bütün hüquqlar qorunur.</footer>
-</div>
 </body>
 </html>
