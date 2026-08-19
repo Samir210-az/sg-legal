@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Panel — SECURITY GROUP</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap');
+  :root {
+    --bg: #0B0F14; --surface: #12181F; --border: #253039;
+    --text: #E9EDF1; --text-dim: #8A97A3; --accent: #E3B23C;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg); color: var(--text);
+    font-family: 'Inter', -apple-system, sans-serif;
+    min-height: 100vh; display: flex; align-items: center; justify-content: center;
+    padding: 24px;
+  }
+  h1 { font-family: 'Space Grotesk', sans-serif; font-size: 22px; margin-bottom: 6px; }
+  .sub { color: var(--text-dim); font-size: 14px; margin-bottom: 28px; }
+  .card {
+    background: var(--surface); border: 1px solid var(--border); border-radius: 12px;
+    padding: 28px; width: 100%; max-width: 420px;
+  }
+  .btn {
+    display: block; width: 100%; text-align: center; text-decoration: none;
+    background: var(--accent); color: #0B0F14; font-weight: 600; font-size: 14px;
+    padding: 13px; border-radius: 8px; border: none; cursor: pointer;
+    font-family: inherit;
+  }
+  .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+  input[type="file"] { display: block; width: 100%; margin: 16px 0; font-size: 13px; color: var(--text-dim); }
+  #status {
+    margin-top: 16px; font-size: 13px; color: var(--text-dim);
+    font-family: 'JetBrains Mono', monospace; word-break: break-word;
+  }
+  .divider { height: 1px; background: var(--border); margin: 22px 0; }
+</style>
+</head>
+<body>
+<div class="card">
+  <h1>SG Social Panel</h1>
+  <p class="sub">Sandbox test paneli</p>
+
+  <a class="btn" id="connectBtn" href="#">TikTok ilə qoşul</a>
+
+  <div class="divider"></div>
+
+  <form id="uploadForm">
+    <input type="file" id="videoInput" accept="video/mp4,video/quicktime" required>
+    <button type="submit" class="btn" id="uploadBtn">Draft kimi göndər</button>
+  </form>
+
+  <div id="status"></div>
+</div>
+
+<script>
+  const CLIENT_KEY = 'sbawxpia5g49zwxc2n';
+  const REDIRECT_URI = window.location.origin + '/api/auth/callback';
+  const SCOPE = 'user.info.basic,user.info.profile,video.upload';
+
+  document.getElementById('connectBtn').href =
+    `https://www.tiktok.com/v2/auth/authorize/?client_key=${CLIENT_KEY}` +
+    `&scope=${encodeURIComponent(SCOPE)}` +
+    `&response_type=code` +
+    `&redirect_uri=${encodeURIComponent(REDIRECT_URI)}` +
+    `&state=sgdemo`;
+
+  const form = document.getElementById('uploadForm');
+  const statusEl = document.getElementById('status');
+  const uploadBtn = document.getElementById('uploadBtn');
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const file = document.getElementById('videoInput').files[0];
+    if (!file) return;
+
+    uploadBtn.disabled = true;
+    statusEl.textContent = 'Yüklənir...';
+
+    const fd = new FormData();
+    fd.append('video', file);
+
+    try {
+      const res = await fetch('/api/upload', { method: 'POST', body: fd });
+      const data = await res.json();
+      statusEl.textContent = data.message || JSON.stringify(data.error);
+    } catch (err) {
+      statusEl.textContent = 'Xəta: ' + err.message;
+    } finally {
+      uploadBtn.disabled = false;
+    }
+  });
+</script>
+</body>
+</html>
